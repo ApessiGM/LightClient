@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "lightclient",
+  "version": "${version}",
+  "name": "Light Client",
+  "description": "Light Client - a high-performance, modular Minecraft PvP client with a glassmorphism ClickGUI, customisable HUD, cosmetics and performance modules.",
+  "authors": [
+    "Light Client Team"
+  ],
+  "contact": {
+    "homepage": "https://lightclient.dev",
+    "sources": "https://github.com/lightclient/lightclient"
+  },
+  "license": "MIT",
+  "icon": "assets/lightclient/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.lightclient.LightClient"
+    ]
+  },
+  "mixins": [
+    "lightclient.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {}
+}
