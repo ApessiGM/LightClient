@@ -30,6 +30,8 @@ import dev.lightclient.modules.cosmetics.TrailsModule;
 import dev.lightclient.modules.cosmetics.WingsModule;
 import dev.lightclient.modules.misc.AutoGGModule;
 import dev.lightclient.modules.misc.AutoTipModule;
+import dev.lightclient.modules.misc.DeathCoordsModule;
+import dev.lightclient.modules.movement.SprintModule;
 import dev.lightclient.modules.movement.ToggleSprintModule;
 import dev.lightclient.modules.performance.AdaptiveFpsLimiterModule;
 import dev.lightclient.modules.performance.ChunkOptimizationModule;
@@ -38,14 +40,18 @@ import dev.lightclient.modules.performance.EntityCullingModule;
 import dev.lightclient.modules.performance.MemoryOptimizationModule;
 import dev.lightclient.modules.performance.ParticleOptimizationModule;
 import dev.lightclient.modules.performance.SmartAnimationCullingModule;
+import dev.lightclient.modules.player.AutoRespawnModule;
 import dev.lightclient.modules.player.FreelookModule;
 import dev.lightclient.modules.player.PerspectiveModule;
+import dev.lightclient.modules.render.AntiBlindModule;
 import dev.lightclient.modules.render.BlockHitAnimationModule;
 import dev.lightclient.modules.render.CrosshairModule;
 import dev.lightclient.modules.render.FullbrightModule;
 import dev.lightclient.modules.render.ItemPhysicsModule;
 import dev.lightclient.modules.render.MotionBlurModule;
+import dev.lightclient.modules.render.NoFovChangesModule;
 import dev.lightclient.modules.render.OldAnimationsModule;
+import dev.lightclient.modules.render.ViewBobbingModule;
 import dev.lightclient.modules.render.ZoomModule;
 import dev.lightclient.modules.utility.BetterChatModule;
 import dev.lightclient.modules.utility.BetterTabModule;
@@ -65,6 +71,7 @@ public final class ModuleManager {
 
         // Movement
         register(new ToggleSprintModule());
+        register(new SprintModule());
 
         // Render
         register(new ZoomModule());
@@ -74,10 +81,14 @@ public final class ModuleManager {
         register(new OldAnimationsModule());
         register(new BlockHitAnimationModule());
         register(new ItemPhysicsModule());
+        register(new ViewBobbingModule());
+        register(new NoFovChangesModule());
+        register(new AntiBlindModule());
 
         // Player
         register(new PerspectiveModule());
         register(new FreelookModule());
+        register(new AutoRespawnModule());
 
         // Utility
         register(new BetterChatModule());
@@ -86,6 +97,7 @@ public final class ModuleManager {
         // Misc
         register(new AutoGGModule());
         register(new AutoTipModule());
+        register(new DeathCoordsModule());
 
         // Performance
         register(new DynamicFpsModule());

@@ -2,6 +2,7 @@ package dev.lightclient.manager;
 
 import dev.lightclient.Reference;
 import dev.lightclient.command.Command;
+import dev.lightclient.command.impl.AccountCommand;
 import dev.lightclient.command.impl.BindCommand;
 import dev.lightclient.command.impl.ConfigCommand;
 import dev.lightclient.command.impl.FriendCommand;
@@ -25,6 +26,7 @@ public final class CommandManager {
         register(new FriendCommand());
         register(new ConfigCommand());
         register(new ThemeCommand());
+        register(new AccountCommand());
     }
 
     public void register(Command command) {

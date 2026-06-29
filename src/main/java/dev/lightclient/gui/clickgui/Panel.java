@@ -4,6 +4,8 @@ import dev.lightclient.LightClient;
 import dev.lightclient.module.Category;
 import dev.lightclient.module.Module;
 import dev.lightclient.util.ColorUtil;
+import dev.lightclient.util.animation.Animation;
+import dev.lightclient.util.animation.Easing;
 import dev.lightclient.util.render.RenderUtil;
 import net.minecraft.client.gui.DrawContext;
 
@@ -27,8 +29,10 @@ public final class Panel {
     private double dragY;
     private double scroll;
     private String search = "";
+    private final Animation openAnim = new Animation(240, Easing.EASE_OUT_EXPO);
 
     public Panel(Category category, double x, double y) {
+        this.openAnim.animateTo(1.0);
         this.category = category;
         this.x = x;
         this.y = y;
@@ -55,11 +59,12 @@ public final class Panel {
         RenderUtil.text(context, category.getDisplayName(), x + 6, y + 4, 0xFF121212);
         RenderUtil.text(context, open ? "v" : ">", x + WIDTH - 10, y + 4, 0xFF121212);
 
-        if (!open) {
+        double factor = openAnim.getValue();
+        if (factor <= 0.01) {
             return;
         }
 
-        double bodyHeight = Math.min(MAX_BODY, totalHeight());
+        double bodyHeight = Math.min(MAX_BODY, totalHeight()) * factor;
         // Glassmorphism body: translucent dark surface.
         RenderUtil.rect(context, x, y + HEADER, WIDTH, bodyHeight, ColorUtil.withAlpha(0x0A0A0A, 215));
         RenderUtil.outline(context, x, y, WIDTH, HEADER + bodyHeight, ColorUtil.withAlpha(accent, 70));
@@ -95,6 +100,7 @@ public final class Panel {
                 dragY = mouseY - y;
             } else if (button == 1) {
                 open = !open;
+                openAnim.animateTo(open ? 1.0 : 0.0);
             }
             return true;
         }

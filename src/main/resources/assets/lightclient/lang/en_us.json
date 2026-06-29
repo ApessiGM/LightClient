@@ -1,5 +1,7 @@
 {
   "key.categories.lightclient": "Light Client",
+  "lightclient.main": "Light Client",
   "key.lightclient.clickgui": "Open ClickGUI",
+  "key.lightclient.accounts": "Open Account Switcher",
   "lightclient.name": "Light Client"
 }

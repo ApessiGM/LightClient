@@ -2,7 +2,9 @@ package dev.lightclient;
 
 import dev.lightclient.event.EventBus;
 import dev.lightclient.event.events.TickEvent;
+import dev.lightclient.gui.AccountScreen;
 import dev.lightclient.gui.ClickGuiScreen;
+import dev.lightclient.manager.AccountManager;
 import dev.lightclient.manager.CommandManager;
 import dev.lightclient.manager.ConfigManager;
 import dev.lightclient.manager.FriendManager;
@@ -45,8 +47,10 @@ public final class LightClient implements ClientModInitializer {
     private NotificationManager notificationManager;
     private RenderManager renderManager;
     private FriendManager friendManager;
+    private AccountManager accountManager;
 
     private KeyBinding clickGuiKey;
+    private KeyBinding accountKey;
 
     public static LightClient getInstance() {
         return instance;
@@ -65,6 +69,7 @@ public final class LightClient implements ClientModInitializer {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
         configManager = new ConfigManager();
+        accountManager = new AccountManager();
 
         moduleManager.init();
         commandManager.init();
@@ -72,6 +77,7 @@ public final class LightClient implements ClientModInitializer {
         registerKeybinds();
         registerLifecycle();
 
+        accountManager.load();
         configManager.load();
         notificationManager.success(Reference.NAME, "v" + Reference.VERSION + " loaded");
         LOGGER.info("{} initialized with {} modules", Reference.NAME, moduleManager.getModules().size());
@@ -82,6 +88,11 @@ public final class LightClient implements ClientModInitializer {
                 "key.lightclient.clickgui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
+                KeyBinding.Category.create(net.minecraft.util.Identifier.of(Reference.MOD_ID, "main"))));
+        accountKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.lightclient.accounts",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_RIGHT_CONTROL,
                 KeyBinding.Category.create(net.minecraft.util.Identifier.of(Reference.MOD_ID, "main"))));
     }
 
@@ -94,6 +105,9 @@ public final class LightClient implements ClientModInitializer {
     private void onClientTick(MinecraftClient client) {
         while (clickGuiKey.wasPressed()) {
             client.setScreen(new ClickGuiScreen());
+        }
+        while (accountKey.wasPressed()) {
+            client.setScreen(new AccountScreen());
         }
         if (client.currentScreen == null && client.player != null) {
             handleModuleKeybinds(client);
@@ -157,6 +171,10 @@ public final class LightClient implements ClientModInitializer {
 
     public FriendManager getFriendManager() {
         return friendManager;
+    }
+
+    public AccountManager getAccountManager() {
+        return accountManager;
     }
 
     public ClickTracker getClickTracker() {
