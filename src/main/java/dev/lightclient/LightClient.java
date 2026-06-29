@@ -84,16 +84,18 @@ public final class LightClient implements ClientModInitializer {
     }
 
     private void registerKeybinds() {
+        KeyBinding.Category category =
+                KeyBinding.Category.create(net.minecraft.util.Identifier.of(Reference.MOD_ID, "main"));
         clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.lightclient.clickgui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
-                KeyBinding.Category.create(net.minecraft.util.Identifier.of(Reference.MOD_ID, "main"))));
+                category));
         accountKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.lightclient.accounts",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_CONTROL,
-                KeyBinding.Category.create(net.minecraft.util.Identifier.of(Reference.MOD_ID, "main"))));
+                category));
     }
 
     private void registerLifecycle() {
